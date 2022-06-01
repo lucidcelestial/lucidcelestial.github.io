@@ -1,0 +1,130 @@
+@keyframes press{
+    100% {
+        background: #eeeeee;
+        box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.5);
+    }
+}
+
+@keyframes incorrect{
+    0%,100%{ background: #eeeeee }
+    12.5%,62.5%{ transform: translateX(-3px); background: #eeeeee }
+    37.5%,87.5%{ transform: translateX(3px); background: #eeeeee }
+}
+
+* { 
+    cursor: url('https://i.imgur.com/9BGPgY7.png') 32 32,auto; 
+}
+
+body{
+    animation-timing-function: linear;
+    background: #ffffff;
+    font-size: 12;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: rgb(0, 0, 0);
+    overflow: hidden; 
+
+    /*https://stackoverflow.com/questions/826782/how-to-disable-text-selection-highlighting*/
+    -webkit-user-select: none; 
+    -ms-user-select: none; 
+    user-select: none;  
+}
+
+#header{
+    height: 100px;
+    border-bottom: 1px solid rgb(246, 246, 246);
+}
+
+/*#region*/
+#game{
+    position: fixed;
+    left: 50%;
+    top: 100px;
+    transform: translate(-50%, 0%);
+    
+    width: 370px;
+    height: 450px;
+
+    display: grid;
+    grid-template-rows: repeat(6,1fr);
+    row-gap: 5px;
+    padding:25px;
+
+    font-weight: bold;
+    font-size: 25px;
+    text-transform: uppercase;
+}
+
+.gameRow{
+    display: grid;
+    grid-template-columns: repeat(5,1fr);
+    column-gap: 10px;
+}
+
+.gameSlot{
+    display: inline-flex;
+    width: 60px;
+    height: 60px;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid rgb(220, 220, 220);
+    border-radius: 5px;
+}
+/*#endregion*/
+
+/*#region*/
+#keyboardContainer{
+    position: fixed;
+    left: 50%;
+    bottom: 10px;
+    transform: translate(-50%, 0%);
+    
+    display: grid;
+    grid-template-rows: repeat(3,75px);
+    row-gap: 5px;
+}
+.keyboardrow1{
+    display: grid;
+    grid-template-columns: repeat(10,50px); 
+    column-gap: 5px;
+}
+.keyboardrow2{
+    display: grid;
+    column-gap: 5px;
+    grid-template-columns: repeat(9,50px); 
+    margin-left: 25px;
+}
+.keyboardrow3{
+    display: grid;
+    column-gap: 5px;
+    grid-template-columns: 75px repeat(7,50px) 75px;
+}
+.button{
+    width: 50px;
+    height: 75px;
+    padding: 5px;
+
+    background: linear-gradient(337.08deg, #FFFFFF -3.33%, #E6E6E6 103.83%);
+    box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+    border: none;
+    
+    font-size: 16px;
+    font-weight: bold;
+
+    transition-duration: 0.1s;
+}
+    #specialEnter{
+        width: 75px;
+        font-size: 12px;
+    }
+    #specialDel{
+        width: 75px;
+    }
+    .button:hover{
+        box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.5);
+    }
+    .button:active{
+        background: linear-gradient(337.08deg, #FFFFFF -3.33%, #C1C1C1 103.83%);
+        box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.5);
+    }
+/*#endregion*/
