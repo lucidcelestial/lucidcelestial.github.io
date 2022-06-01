@@ -3,126 +3,131 @@ const gameBoard = document.getElementsByClassName('gameSlot');
 const gameRows = document.getElementsByClassName('gameRow');
 let index=0;
 
-function run(){
-    const cur_word = possibleWords.commonWords[Math.floor(Math.random()*possibleWords.commonWords.length)].split('');
-    const buttons=document.querySelectorAll('button');
-    for(let i=0; i<buttons.length; i++){
-        buttons[i].addEventListener("click",function(){ 
-            eventHandler(buttons[i].dataset.key,cur_word);
-        },false);
-    }
+let handlers={
+    run: () => {
+        const cur_word = possibleWords.commonWords[Math.floor(Math.random() * possibleWords.commonWords.length)].split('');
+        const buttons = document.querySelectorAll('button');
+        for (let i = 0; i < buttons.length; i++) {
+            buttons[i].addEventListener("click", function () {
+                handlers.eventHandler(buttons[i].dataset.key, cur_word);
+            }, false);
+        }
 
-    document.addEventListener("keydown",(keypress) => {
-        let key=keypress.key.toLowerCase();
-        if(isLetter(key)||key=="enter"||key=="backspace"){
-            eventHandler(key,cur_word);
+        document.addEventListener("keydown", (keypress) => {
+            let key = keypress.key.toLowerCase();
+            if (dataActions.isLetter(key) || key == "enter" || key == "backspace") {
+                handlers.eventHandler(key, cur_word);
 
-            for(var i=0; i<buttons.length; i++){
-                buttons[i].blur();
-                if(buttons[i].dataset.key===key){
-                    let button=buttons[i];
-                    boardActions.triggerAnimation("press",button,"0.1s");
+                for (var i = 0; i < buttons.length; i++) {
+                    buttons[i].blur();
+                    if (buttons[i].dataset.key === key) {
+                        let button = buttons[i];
+                        boardActions.triggerAnimation("press", button, "0.1s");
+                    }
                 }
             }
+        }, false);
+
+        console.log(cur_word);
+    },
+    eventHandler: (key,cur_word) => {
+        let length = 5 - (values[index].join("").split(" ").length - 1);
+        let word="";
+
+        switch(key){
+            case "enter":
+                word=values[index].join("");
+
+                if(length==0) break;
+                else if(length!=5){ boardActions.clearRow(index); break; }
+                
+                if(dataActions.isWord(word)){ 
+                    dataActions.parseRow(values[index],index,cur_word); 
+                    index++;
+                }else boardActions.clearRow(index);
+                break;
+            case "backspace":
+                if(length==0) break;
+                values[index][length-1]=' ';
+                boardActions.deleteRow(index,length-1);
+                break;
+            default: 
+                if(length==5) break;
+                values[index][length]=key;
+                boardActions.updateRow(index,length);
+                break;
         }
-    },false);
-
-    console.log(cur_word);
-}
-
-function eventHandler(key,cur_word){
-    let length = 5 - (values[index].join("").split(" ").length - 1);
-    let word="";
-
-    switch(key){
-        case "enter":
-            word=values[index].join("");
-
-            if(length==0) break;
-            else if(length!=5){ boardActions.clearRow(index); break; }
-            
-            if(isWord(word)){ 
-                parseRow(values[index],index,cur_word); 
-                index++;
-            }else boardActions.clearRow(index);
-            break;
-        case "backspace":
-            if(length==0) break;
-            values[index][length-1]=' ';
-            boardActions.deleteRow(index,length-1);
-            break;
-        default: 
-            if(length==5) break;
-            values[index][length]=key;
-            boardActions.updateRow(index,length);
-            break;
+        console.log(`index: ${index}: ${values[index]}`);
     }
-    console.log(`index: ${index}: ${values[index]}`);
 }
 
-function isWord(word){
-    let check=false;
-    [...possibleWords.commonWords,...possibleWords.uncommonWords].forEach((x)=>{
-        if(x==word) check=true;
-    });
-    console.log(check);
-    return check;
-}
+let dataActions={
+    parseRow: (row, index, cur_word) => {
+        if (row.join().toLowerCase() === cur_word.join()) {
+            //win scenario
+            console.log("you win");
+        }
 
-function parseRow(row,index,cur_word){
-    if(row.join().toLowerCase()===cur_word.join()){
-        console.log("you win");
-    }
-
-    for(let i=0;i<5;i++){
-        if(row[i]==cur_word[i]){
-            gameBoard[(index*5)+i].dataset.state="match";
-        }else{
-            let check=false;
-            let checked=new Array(5);
-            for(let j=0;j<5;j++){
-                if(row[i]==cur_word[j]&&checked[j]!=true){
-                    check=true;
-                    checked[i]=true;
+        for (let i = 0; i < 5; i++) {
+            if (row[i] == cur_word[i]) {
+                gameBoard[(index * 5) + i].dataset.state = "match";
+            } else {
+                let check = false;
+                let checked = new Array(5);
+                for (let j = 0; j < 5; j++) {
+                    if (row[i] == cur_word[j] && checked[j] != true) {
+                        check = true;
+                        checked[i] = true;
+                    }
                 }
+                if (check == true)
+                    gameBoard[(index * 5) + i].dataset.state = "correct";
+                else
+                    gameBoard[(index * 5) + i].dataset.state = "incorrect";
             }
-            if(check==true) gameBoard[(index*5)+i].dataset.state="correct";
-            else gameBoard[(index*5)+i].dataset.state="incorrect";
         }
+    },
+    isLetter: (str) => {
+        return str.length === 1 && str.match(/[a-z]/i);
+    },
+    isWord: (word) => {
+        let check = false;
+        [...possibleWords.commonWords, ...possibleWords.uncommonWords].forEach((x) => {
+            if (x == word)
+                check = true;
+        });
+        console.log(check);
+        return check;
     }
 }
 
 let boardActions={
-    updateRow: function(index,slot){
-        gameBoard[index*5+slot].innerHTML=values[index][slot];
-        gameBoard[index*5+slot].style.borderColor="black";
+    updateRow: (index, slot) => {
+        gameBoard[index * 5 + slot].innerHTML = values[index][slot];
+        gameBoard[index * 5 + slot].style.borderColor = "black";
     },
-    deleteRow: function(index,slot){
-        gameBoard[index*5+slot].innerHTML="";
-        gameBoard[index*5+slot].style.borderColor="rgb(220, 220, 220)";
+    deleteRow: (index, slot) => {
+        gameBoard[index * 5 + slot].innerHTML = "";
+        gameBoard[index * 5 + slot].style.borderColor = "rgb(220, 220, 220)";
     },
-    clearRow: function(index){
+    clearRow: (index) => {
         values[index].fill(' ');
         setTimeout(() => {
-            for(let i=0;i<5;i++){ 
-                gameBoard[index*5+i].innerHTML="";
-                gameBoard[index*5+i].style.borderColor="rgb(220, 220, 220)";
+            for (let i = 0; i < 5; i++) {
+                gameBoard[index * 5 + i].innerHTML = "";
+                gameBoard[index * 5 + i].style.borderColor = "rgb(220, 220, 220)";
             }
-        },500);
-        
-        for(let i=0;i<5;i++){ 
-            boardActions.triggerAnimation("incorrect",gameBoard[index*5+i],"0.5s");
+        }, 500);
+
+        for (let i = 0; i < 5; i++) {
+            boardActions.triggerAnimation("incorrect", gameBoard[index * 5 + i], "0.5s");
         }
     },
-    triggerAnimation:function(animName,object,length){
-        setTimeout(() => {object.style.animation=`${animName} ${length}`});
-        object.style.animation="none";
-        object.style.animation=null;
+    triggerAnimation: (animName, object, length) => {
+        setTimeout(() => { object.style.animation = `${animName} ${length}`; });
+        object.style.animation = "none";
+        object.style.animation = null;
     }
-}
-
-function isLetter(str){
-    return str.length === 1 && str.match(/[a-z]/i);
 }
 
 /**
