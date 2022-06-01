@@ -21,7 +21,7 @@ function run(){
                 buttons[i].blur();
                 if(buttons[i].dataset.key===key){
                     let button=buttons[i];
-                    triggerAnimation("press",button,"0.1s")
+                    boardActions.triggerAnimation("press",button,"0.1s");
                 }
             }
         }
@@ -39,22 +39,22 @@ function eventHandler(key,cur_word){
             word=values[index].join("");
 
             if(length==0) break;
-            else if(length!=5){ clearRow(index); break; }
+            else if(length!=5){ boardActions.clearRow(index); break; }
             
             if(isWord(word)){ 
                 parseRow(values[index],index,cur_word); 
                 index++;
-            }else clearRow(index);
+            }else boardActions.clearRow(index);
             break;
         case "backspace":
             if(length==0) break;
             values[index][length-1]=' ';
-            deleteRow(index,length-1);
+            boardActions.deleteRow(index,length-1);
             break;
         default: 
             if(length==5) break;
             values[index][length]=key;
-            updateRow(index,length);
+            boardActions.updateRow(index,length);
             break;
     }
     console.log(`index: ${index}: ${values[index]}`);
@@ -92,38 +92,37 @@ function parseRow(row,index,cur_word){
     }
 }
 
-function updateRow(index,slot){
-    gameBoard[index*5+slot].innerHTML=values[index][slot];
-    gameBoard[index*5+slot].style.borderColor="black";
-}
-
-function deleteRow(index,slot){
-    gameBoard[index*5+slot].innerHTML="";
-    gameBoard[index*5+slot].style.borderColor="rgb(220, 220, 220)";
-}
-
-function clearRow(index){
-    values[index].fill(' ');
-    setTimeout(() => {
-        for(let i=0;i<5;i++){ 
-            gameBoard[index*5+i].innerHTML="";
-            gameBoard[index*5+i].style.borderColor="rgb(220, 220, 220)";
-        }
-    },500);
+let boardActions={
+    updateRow: function(index,slot){
+        gameBoard[index*5+slot].innerHTML=values[index][slot];
+        gameBoard[index*5+slot].style.borderColor="black";
+    },
+    deleteRow: function(index,slot){
+        gameBoard[index*5+slot].innerHTML="";
+        gameBoard[index*5+slot].style.borderColor="rgb(220, 220, 220)";
+    },
+    clearRow: function(index){
+        values[index].fill(' ');
+        setTimeout(() => {
+            for(let i=0;i<5;i++){ 
+                gameBoard[index*5+i].innerHTML="";
+                gameBoard[index*5+i].style.borderColor="rgb(220, 220, 220)";
+            }
+        },500);
         
-    for(let i=0;i<5;i++){ 
-        triggerAnimation("incorrect",gameBoard[index*5+i],"0.5s");
+        for(let i=0;i<5;i++){ 
+            boardActions.triggerAnimation("incorrect",gameBoard[index*5+i],"0.5s");
+        }
+    },
+    triggerAnimation:function(animName,object,length){
+        setTimeout(() => {object.style.animation=`${animName} ${length}`});
+        object.style.animation="none";
+        object.style.animation=null;
     }
 }
 
 function isLetter(str){
     return str.length === 1 && str.match(/[a-z]/i);
-}
-
-function triggerAnimation(animName,object,length){
-    setTimeout(() => {object.style.animation=`${animName} ${length}`});
-    object.style.animation="none";
-    object.style.animation=null;
 }
 
 /**
