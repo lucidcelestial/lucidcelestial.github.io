@@ -18,7 +18,7 @@ function run(){
             eventHandler(key,cur_word);
 
             for(var i=0; i<buttons.length; i++){
-                buttons[i].blur(); //buttons kept randomly focusing upon clicking and triggering a keypress at the same time
+                buttons[i].blur();
                 if(buttons[i].dataset.key===key){
                     let button=buttons[i];
                     triggerAnimation("press",button,"0.1s")
