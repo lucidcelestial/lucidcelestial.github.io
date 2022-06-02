@@ -7,8 +7,10 @@ let index=0;
 
 const colours={
     foreground: "#FFFFFF",
-    match: "#55de3a",
-    correct: "#ffd500",
+    defaultBorder: "#DCDCDC",
+    border: "#000000",
+    match: "#55DE3A",
+    correct: "#FFD500",
     incorrectSlot: "#666666",
     incorrectKeyBackground: "#DDDDDD",
     incorrectKeyForeground: "#EEEEEE"
@@ -78,6 +80,10 @@ let handlers={
                 break;
         }
         console.log(`index: ${index}: ${values[index]}`);
+    },
+    win: () => {
+        console.log("You win lol");
+        handlers.removeEventListeners();
     }
 }
 
@@ -85,8 +91,7 @@ let dataActions={
     parseRow: (row, index, cur_word) => {
         let cur_tile;
         if (row.join().toLowerCase() === cur_word.join()) {
-            //win scenario
-            console.log("you win");
+            handlers.win();
         }
 
         for (let i = 0; i < 5; i++) {
@@ -128,11 +133,11 @@ let dataActions={
 let boardActions={
     updateRow: (index, slot) => {
         gameBoard[index * 5 + slot].innerHTML = values[index][slot];
-        gameBoard[index * 5 + slot].style.borderColor = "black";
+        gameBoard[index * 5 + slot].style.borderColor = colours.border;
     },
     deleteRow: (index, slot) => {
         gameBoard[index * 5 + slot].innerHTML = "";
-        gameBoard[index * 5 + slot].style.borderColor = "rgb(220, 220, 220)";
+        gameBoard[index * 5 + slot].style.borderColor = colours.defaultBorder;
     },
     clearRow: (index) => {
         handlers.removeEventListeners();
@@ -140,7 +145,7 @@ let boardActions={
         setTimeout(() => {
             for (let i = 0; i < 5; i++) {
                 gameBoard[index * 5 + i].innerHTML = "";
-                gameBoard[index * 5 + i].style.borderColor = "rgb(220, 220, 220)";
+                gameBoard[index * 5 + i].style.borderColor = colours.defaultBorder;
             }
             handlers.addEventListeners();
         }, 500);
