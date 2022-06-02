@@ -1,12 +1,17 @@
 let values = [...Array(6)].map(x=>Array(5).fill(' ')); //why
 const gameBoard = document.getElementsByClassName('gameSlot');
 const gameRows = document.getElementsByClassName('gameRow');
+const buttons = document.querySelectorAll('button');
+let cur_word="";
 let index=0;
 
 let handlers={
-    run: () => {
-        const cur_word = possibleWords.commonWords[Math.floor(Math.random() * possibleWords.commonWords.length)].split('');
-        const buttons = document.querySelectorAll('button');
+    init: () => {
+        cur_word = possibleWords.commonWords[Math.floor(Math.random() * possibleWords.commonWords.length)].split('');
+        handlers.addEventListeners();
+        console.log(cur_word);
+    },
+    addEventListeners: () => {
         for (let i = 0; i < buttons.length; i++) {
             buttons[i].addEventListener("click", function () {
                 handlers.eventHandler(buttons[i].dataset.key, cur_word);
@@ -27,8 +32,6 @@ let handlers={
                 }
             }
         }, false);
-
-        console.log(cur_word);
     },
     eventHandler: (key,cur_word) => {
         let length = 5 - (values[index].join("").split(" ").length - 1);
