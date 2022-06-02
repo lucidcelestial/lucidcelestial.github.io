@@ -18,6 +18,12 @@ let handlers={
         }
         document.addEventListener("keydown",handlers.keyEvent, false);
     },
+    removeEventListeners: () => {
+        for (let i = 0; i < buttons.length; i++) {
+            buttons[i].removeEventListener("click",handlers.buttonEvent, false);
+        }
+        document.removeEventListener("keydown",handlers.keyEvent, false);
+    },
     buttonEvent: (button) => {
         handlers.eventHandler(button.target.dataset.key, cur_word);
     },
@@ -116,12 +122,14 @@ let boardActions={
         gameBoard[index * 5 + slot].style.borderColor = "rgb(220, 220, 220)";
     },
     clearRow: (index) => {
+        handlers.removeEventListeners();
         values[index].fill(' ');
         setTimeout(() => {
             for (let i = 0; i < 5; i++) {
                 gameBoard[index * 5 + i].innerHTML = "";
                 gameBoard[index * 5 + i].style.borderColor = "rgb(220, 220, 220)";
             }
+            handlers.addEventListeners();
         }, 500);
 
         for (let i = 0; i < 5; i++) {
