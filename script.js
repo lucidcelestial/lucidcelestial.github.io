@@ -97,6 +97,7 @@ let dataActions={
                     gameBoard[(index * 5) + i].dataset.state = "incorrect";
             }
         }
+        boardActions.updateColors(index);
     },
     isLetter: (str) => {
         return str.length === 1 && str.match(/[a-z]/i);
@@ -134,6 +135,27 @@ let boardActions={
 
         for (let i = 0; i < 5; i++) {
             boardActions.triggerAnimation("incorrect", gameBoard[index * 5 + i], "0.5s");
+        }
+    },
+    updateColors: (index) =>{
+        for(let i=0;i<5;i++){
+            let cur_slot=gameBoard[index*5+i];
+            console.log(cur_slot.dataset.state);
+            switch(cur_slot.dataset.state){
+                case "match": 
+                    cur_slot.style.backgroundColor="#55de3a"; 
+                    cur_slot.style.borderColor="#55de3a";
+                    break;
+                case "correct": 
+                    cur_slot.style.backgroundColor="#ffd500"; 
+                    cur_slot.style.borderColor="#ffd500"; 
+                    break;
+                case "incorrect": 
+                    cur_slot.style.backgroundColor="#666666"; 
+                    cur_slot.style.border="#666666"; 
+                    break;
+            }
+            cur_slot.style.color="#FFFFFF";
         }
     },
     triggerAnimation: (animName, object, length) => {
