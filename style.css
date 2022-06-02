@@ -4,17 +4,29 @@
 }
 body{
     animation-timing-function: linear;
-    background: #ffffff;
-    font-size: 12; font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: rgb(0, 0, 0);
+    height: 100%; background-repeat: no-repeat; background-attachment: fixed;
+
+    background: rgb(13,13,13);
+    background: radial-gradient(circle, rgb(32, 32, 32) 0%, rgb(36, 36, 36) 100%);
+    font-size: 12; font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: rgb(255, 255, 255);
     overflow: hidden; 
 
     /*https://stackoverflow.com/questions/826782/how-to-disable-text-selection-highlighting*/
     -webkit-user-select: none; -ms-user-select: none; user-select: none;  
 }
-#header{
-    height: 100px;
-    border-bottom: 1px solid rgb(246, 246, 246);
+.header{
+    display: flex;
+    justify-content: center; align-items: center;
+    height: auto; width: 100%;
 }
+    hr{
+        border-bottom: 1px solid rgb(110, 110, 110);
+        margin: 5px -15px;
+    }
+    .headerText{
+        font-family: Georgia, serif; font-weight: bolder; font-size: 30px; 
+        margin-top: 5px; margin-bottom: 5px;
+    }
 
 /*game board stuff*/
 #game{
@@ -36,7 +48,7 @@ body{
             display: inline-flex;
             width: 60px; height: 60px;
             align-items: center; justify-content: center;
-            border: 2px solid; border-color: rgb(220, 220, 220); border-radius: 5px;
+            border: 2px solid; border-color: rgb(110, 110, 110); border-radius: 5px;
         }
 
 
@@ -62,8 +74,9 @@ body{
     }
         .button{
             width: 50px; height: 75px; padding: 5px;
+            color: #FFFFFF;
 
-            background: linear-gradient(337.08deg, #FFFFFF -3.33%, #E6E6E6 103.83%);
+            background: linear-gradient(337.08deg, #666666 -3.33%, #505050 103.83%);
             box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.25);
             border-radius: 10px; border: none;
             
@@ -75,7 +88,7 @@ body{
                 box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.5);
             }
             .button:active{
-                background: linear-gradient(337.08deg, #FFFFFF -3.33%, #C1C1C1 103.83%);
+                background: linear-gradient(337.08deg, #666666 -3.33%, #464646 103.83%);
                 box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.5);
             }
         #specialEnter{
@@ -88,10 +101,10 @@ body{
 
 /*animation keyframes*/
 @keyframes press{
-    100% { background: #eeeeee; box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.5); }
+    100% { background: linear-gradient(337.08deg, #666666 -3.33%, #464646 103.83%); box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.5); }
 }
 @keyframes incorrect{
-    0%,100%{ background: #eeeeee }
-    12.5%,62.5%{ transform: translateX(-3px); background: #eeeeee }
-    37.5%,87.5%{ transform: translateX(3px); background: #eeeeee }
+    0%,100%{ background: #b80000; border-color: #b80000; }
+    12.5%,62.5%{ transform: translateX(-3px); background: #b80000; border-color: #b80000; }
+    37.5%,87.5%{ transform: translateX(3px); background: #b80000; border-color: #b80000; }
 }

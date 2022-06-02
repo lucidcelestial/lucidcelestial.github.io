@@ -4,16 +4,15 @@ const gameRows = document.getElementsByClassName('gameRow');
 const buttons = document.getElementsByClassName("button");
 let cur_word="";
 let index=0;
-
 const colours={
     foreground: "#FFFFFF",
-    defaultBorder: "#DCDCDC",
-    border: "#000000",
+    defaultBorder: "#6E6E6E",
+    border: "#FFFFFF",
     match: "#55DE3A",
     correct: "#FFD500",
     incorrectSlot: "#666666",
-    incorrectKeyBackground: "#DDDDDD",
-    incorrectKeyForeground: "#EEEEEE"
+    incorrectKeyBackground: "#333333",
+    incorrectKeyForeground: "#555555"
 }
 
 let handlers={
@@ -172,6 +171,7 @@ let boardActions={
                     break;
             }
             cur_slot.style.color=colours.foreground;
+            cur_slot.style.boxShadow="0px 3px 10px rgba(0, 0, 0, 0.5)";
         }
     },
     updateButtonColours: (key,state) => {
