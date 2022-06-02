@@ -5,6 +5,15 @@ const buttons = document.getElementsByClassName("button");
 let cur_word="";
 let index=0;
 
+const colours={
+    foreground: "#FFFFFF",
+    match: "#55de3a",
+    correct: "#ffd500",
+    incorrectSlot: "#666666",
+    incorrectKeyBackground: "#DDDDDD",
+    incorrectKeyForeground: "#EEEEEE"
+}
+
 let handlers={
     init: () => {
         cur_word = possibleWords.commonWords[Math.floor(Math.random() * possibleWords.commonWords.length)].split('');
@@ -74,14 +83,16 @@ let handlers={
 
 let dataActions={
     parseRow: (row, index, cur_word) => {
+        let cur_tile;
         if (row.join().toLowerCase() === cur_word.join()) {
             //win scenario
             console.log("you win");
         }
 
         for (let i = 0; i < 5; i++) {
+            cur_tile = gameBoard[(index * 5) + i];
             if (row[i] == cur_word[i]) {
-                gameBoard[(index * 5) + i].dataset.state = "match";
+                cur_tile.dataset.state = "match";
             } else {
                 let check = false;
                 let checked = new Array(5);
@@ -92,12 +103,13 @@ let dataActions={
                     }
                 }
                 if (check == true)
-                    gameBoard[(index * 5) + i].dataset.state = "correct";
+                    cur_tile.dataset.state = "correct";
                 else
-                    gameBoard[(index * 5) + i].dataset.state = "incorrect";
+                    cur_tile.dataset.state = "incorrect";
             }
+            boardActions.updateButtonColours(row[i],cur_tile.dataset.state);
         }
-        boardActions.updateColors(index);
+        boardActions.updateSlotColours(index);
     },
     isLetter: (str) => {
         return str.length === 1 && str.match(/[a-z]/i);
@@ -137,25 +149,42 @@ let boardActions={
             boardActions.triggerAnimation("incorrect", gameBoard[index * 5 + i], "0.5s");
         }
     },
-    updateColors: (index) =>{
+    updateSlotColours: (index) =>{
         for(let i=0;i<5;i++){
             let cur_slot=gameBoard[index*5+i];
-            console.log(cur_slot.dataset.state);
             switch(cur_slot.dataset.state){
                 case "match": 
-                    cur_slot.style.backgroundColor="#55de3a"; 
-                    cur_slot.style.borderColor="#55de3a";
+                    cur_slot.style.backgroundColor=colours.match; 
+                    cur_slot.style.borderColor=colours.match;
                     break;
                 case "correct": 
-                    cur_slot.style.backgroundColor="#ffd500"; 
-                    cur_slot.style.borderColor="#ffd500"; 
+                    cur_slot.style.backgroundColor=colours.correct; 
+                    cur_slot.style.borderColor=colours.correct; 
                     break;
                 case "incorrect": 
-                    cur_slot.style.backgroundColor="#666666"; 
-                    cur_slot.style.border="#666666"; 
+                    cur_slot.style.backgroundColor=colours.incorrectSlot; 
+                    cur_slot.style.borderColor=colours.incorrectSlot; 
                     break;
             }
-            cur_slot.style.color="#FFFFFF";
+            cur_slot.style.color=colours.foreground;
+        }
+    },
+    updateButtonColours: (key,state) => {
+        let button=Array.from(buttons).find(search => search.dataset.key == key);
+        switch(state){
+            case "match": 
+                button.style.background=colours.match; 
+                button.style.color=colours.foreground;
+                break;
+            case "correct": 
+                button.style.background=colours.correct;
+                button.style.color=colours.foreground; 
+                break;
+            case "incorrect": 
+                button.style.background=colours.incorrectKeyBackground;
+                button.style.color=colours.incorrectKeyForeground;
+                button.style.boxShadow="none";
+                break;
         }
     },
     triggerAnimation: (animName, object, length) => {
