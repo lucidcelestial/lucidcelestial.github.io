@@ -14,12 +14,12 @@ let handlers={
     },
     addEventListeners: () => {
         for (let i = 0; i < buttons.length; i++) {
-            buttons[i].addEventListener("click", function () {
-                handlers.eventHandler(buttons[i].dataset.key, cur_word);
-            }, false);
+            buttons[i].addEventListener("click",handlers.buttonEvent, false);
         }
-
         document.addEventListener("keydown",handlers.keyEvent, false);
+    },
+    buttonEvent: (button) => {
+        handlers.eventHandler(button.target.dataset.key, cur_word);
     },
     keyEvent: (keypress) => {
         let key = keypress.key.toLowerCase();
