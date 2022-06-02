@@ -1,7 +1,7 @@
 let values = [...Array(6)].map(x=>Array(5).fill(' ')); //why
 const gameBoard = document.getElementsByClassName('gameSlot');
 const gameRows = document.getElementsByClassName('gameRow');
-const buttons = document.querySelectorAll('button');
+const buttons = document.getElementsByClassName("button");
 let cur_word="";
 let index=0;
 
@@ -9,6 +9,7 @@ let handlers={
     init: () => {
         cur_word = possibleWords.commonWords[Math.floor(Math.random() * possibleWords.commonWords.length)].split('');
         handlers.addEventListeners();
+        console.log(buttons.length);
         console.log(cur_word);
     },
     addEventListeners: () => {
@@ -18,20 +19,21 @@ let handlers={
             }, false);
         }
 
-        document.addEventListener("keydown", (keypress) => {
-            let key = keypress.key.toLowerCase();
-            if (dataActions.isLetter(key) || key == "enter" || key == "backspace") {
-                handlers.eventHandler(key, cur_word);
+        document.addEventListener("keydown",handlers.keyEvent, false);
+    },
+    keyEvent: (keypress) => {
+        let key = keypress.key.toLowerCase();
+        if (dataActions.isLetter(key) || key == "enter" || key == "backspace") {
+            handlers.eventHandler(key, cur_word);
 
-                for (var i = 0; i < buttons.length; i++) {
-                    buttons[i].blur();
-                    if (buttons[i].dataset.key === key) {
-                        let button = buttons[i];
-                        boardActions.triggerAnimation("press", button, "0.1s");
-                    }
+            for (var i = 0; i < buttons.length; i++) {
+                buttons[i].blur();
+                if (buttons[i].dataset.key === key) {
+                    let button = buttons[i];
+                    boardActions.triggerAnimation("press", button, "0.1s");
                 }
             }
-        }, false);
+        }
     },
     eventHandler: (key,cur_word) => {
         let length = 5 - (values[index].join("").split(" ").length - 1);
