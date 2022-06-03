@@ -17,7 +17,9 @@ const colours={
 
 let handlers={
     init: () => {
-        cur_word = possibleWords.commonWords[Math.floor(Math.random() * possibleWords.commonWords.length)].split('');
+        //cur_word = possibleWords.commonWords[Math.floor(Math.random() * possibleWords.commonWords.length)].split('');
+        word="thema";
+        cur_word=word.split('');
         handlers.addEventListeners();
         console.log(buttons.length);
         console.log(cur_word);
@@ -89,6 +91,8 @@ let handlers={
 let dataActions={
     parseRow: (row, index, cur_word) => {
         let cur_tile;
+        let checked = new Array(5);
+
         if (row.join().toLowerCase() === cur_word.join()) {
             handlers.win();
         }
@@ -97,20 +101,22 @@ let dataActions={
             cur_tile = gameBoard[(index * 5) + i];
             if (row[i] == cur_word[i]) {
                 cur_tile.dataset.state = "match";
-            } else {
-                let check = false;
-                let checked = new Array(5);
-                for (let j = 0; j < 5; j++) {
-                    if (row[i] == cur_word[j] && checked[j] != true) {
-                        check = true;
-                        checked[i] = true;
-                    }
-                }
-                if (check == true)
-                    cur_tile.dataset.state = "correct";
-                else
-                    cur_tile.dataset.state = "incorrect";
+                checked[i]=true;
             }
+        }
+        for(let i = 0; i < 5; i++) {
+            cur_tile = gameBoard[(index * 5) + i];
+            let check = false;
+            for (let j = 0; j < 5; j++) {
+                if (row[i] === cur_word[j] && !checked[j]) {
+                    check = true;
+                    checked[j] = true;
+                }
+            }
+            if (check) cur_tile.dataset.state = "correct";
+            else if(!cur_tile.dataset.state) cur_tile.dataset.state = "incorrect";
+
+            console.log(cur_tile.dataset.state);
             boardActions.updateButtonColours(row[i],cur_tile.dataset.state);
         }
         boardActions.updateSlotColours(index);
