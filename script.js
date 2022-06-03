@@ -1,6 +1,5 @@
 let values = [...Array(6)].map(x=>Array(5).fill(' ')); //why
 const gameBoard = document.getElementsByClassName('gameSlot');
-const gameRows = document.getElementsByClassName('gameRow');
 const buttons = document.getElementsByClassName("button");
 let cur_word="";
 let index=0;
@@ -80,6 +79,23 @@ let handlers = {
     win: () => {
         console.log("You win lol");
         handlers.removeEventListeners();
+        handlers.resultsToClipboard();
+    },
+    resultsToClipboard: () => {
+        let resultString=`Jerdle Test\nWord: ${cur_word.join('')}\n`;
+        let indexCounter=0;
+        loop:for(slot of gameBoard){
+            if(indexCounter%5===0) resultString+="\n";
+
+            switch(slot.dataset.state){
+                case "match": resultString+="🟩"; break;
+                case "correct": resultString+="🟨"; break;
+                case "incorrect": resultString+="⬛"; break;
+                default: break loop;
+            }
+            indexCounter++;
+        }
+        navigator.clipboard.writeText(resultString);
     }
 }
 
@@ -89,6 +105,7 @@ let dataActions = {
         let checked = new Array(5);
 
         if (row.join().toLowerCase() === cur_word.join()) {
+            for(let i=0;i<5;i++) gameBoard[index * 5 + i].dataset.state="match";
             handlers.win();
         }
 
