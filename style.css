@@ -1,14 +1,13 @@
 /*general stuff*/
 * { 
-    cursor: url('https://lucidcelestial.github.io/assets/cursor.png') 32 32,auto; 
+    cursor: url('assets/cursor.png') 32 32,auto; 
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: rgb(0, 0, 0);
 }
 body{
     animation-timing-function: linear;
     height: 100%; background-repeat: no-repeat; background-attachment: fixed;
 
-    background: rgb(13,13,13);
-    background: radial-gradient(circle, rgb(32, 32, 32) 0%, rgb(36, 36, 36) 100%);
-    font-size: 12; font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: rgb(255, 255, 255);
+    background: #FFFFFF;
     overflow: hidden; 
 
     /*https://stackoverflow.com/questions/826782/how-to-disable-text-selection-highlighting*/
@@ -20,13 +19,48 @@ body{
     height: auto; width: 100%;
 }
     hr{
-        border-bottom: 1px solid rgb(110, 110, 110);
+        border-bottom: 1px solid rgb(200, 200, 200);
         margin: 5px -15px;
     }
     .headerText{
-        font-family: Georgia, serif; font-weight: bolder; font-size: 30px; 
+        font-weight: bolder; font-size: 30px;
         margin-top: 5px; margin-bottom: 5px;
     }
+
+.popup{
+    display: flex; position: fixed;
+    width: 100%; height: 100%;
+    z-index: 1;
+    top: 0; left: 0;
+    background-color: rgba(0, 0, 0, 0.25);
+    opacity: 0; 
+}
+    .popupBox{
+        display: flex; flex-direction: column; align-items: center;
+        width: 500px; margin: auto auto; padding: 50px; 
+        border-radius: 5px; 
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+        background-color: #FFFFFF;
+        font-size: 20px;
+    }
+    .shareIcon{
+        width: 20px; height: 20px;
+    }
+    .share{
+        display: flex; justify-content: center; align-items: center;
+        background-color: #22CC00; color: #FFFFFF;
+        width:150px; height: 50px;
+        font-size: 20px;
+        border: none; border-radius: 10px;
+    }
+        .share:hover{
+            background-color: #20c000;
+            box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.5);
+        }
+        .share:active{
+            background-color: #20c000;
+            box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.5);
+        }
 
 /*game board stuff*/
 #game{
@@ -48,7 +82,7 @@ body{
             display: inline-flex;
             width: 60px; height: 60px;
             align-items: center; justify-content: center;
-            border: 2px solid; border-color: rgb(110, 110, 110); border-radius: 5px;
+            border: 2px solid; border-color: rgb(200, 200, 200); border-radius: 5px;
         }
 
 
@@ -58,7 +92,7 @@ body{
     left: 50%; bottom: 10px; transform: translate(-50%, 0%);
     
     display: grid;
-    grid-template-rows: repeat(3,75px); row-gap: 5px;
+    grid-template-rows: repeat(3,70px); row-gap: 5px;
 }
     .keyboardrow1{
         display: grid;
@@ -73,10 +107,9 @@ body{
         column-gap: 5px; grid-template-columns: 75px repeat(7,50px) 75px;
     }
         .button{
-            width: 50px; height: 75px; padding: 5px;
-            color: #FFFFFF;
+            width: 50px; height: 70px; padding: 5px;
 
-            background: linear-gradient(337.08deg, #666666 -3.33%, #505050 103.83%);
+            background: linear-gradient(337.08deg, #f7f7f7 -3.33%, #e7e7e7 103.83%);
             box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.25);
             border-radius: 10px; border: none;
             
@@ -85,11 +118,11 @@ body{
             transition-duration: 0.1s;
         }
             .button:hover{
-                background: linear-gradient(337.08deg, #666666 -3.33%, #656565 103.83%);
+                background: linear-gradient(337.08deg, #f7f7f7 -3.33%, #f0f0f0 103.83%);
                 box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.5);
             }
             .button:active{
-                background: linear-gradient(337.08deg, #666666 -3.33%, #464646 103.83%);
+                background: linear-gradient(337.08deg, #f7f7f7 -3.33%, #f0f0f0 103.83%);
                 box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.5);
             }
         #specialEnter{
@@ -102,10 +135,17 @@ body{
 
 /*animation keyframes*/
 @keyframes press{
-    100% { background: linear-gradient(337.08deg, #666666 -3.33%, #464646 103.83%); box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.5); }
+    100% { background: linear-gradient(337.08deg, #f7f7f7 -3.33%, #f0f0f0 103.83%); box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.5); }
 }
 @keyframes incorrect{
-    0%,100%{ background: #b80000; border-color: #b80000; }
-    12.5%,62.5%{ transform: translateX(-3px); background: #b80000; border-color: #b80000; }
-    37.5%,87.5%{ transform: translateX(3px); background: #b80000; border-color: #b80000; }
+    0%,100%{ color: #FFFFFF; background: #cc0000; border-color: #cc0000; }
+    12.5%,62.5%{ color: #FFFFFF; transform: translateX(-3px); background: #cc0000; border-color: #cc0000; }
+    37.5%,87.5%{ color: #FFFFFF; transform: translateX(3px); background: #cc0000; border-color: #cc0000; }
+}
+@keyframes showPopup{
+    from{ opacity: 0; }
+    to{ opacity: 1; }
+}
+@keyframes hidePopup{
+    100%{ opacity: 0; }
 }

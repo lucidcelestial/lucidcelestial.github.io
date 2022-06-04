@@ -11,11 +11,23 @@
         <link rel="icon" href="https://cdn.discordapp.com/emojis/808420194425765969.webp?size=240&quality=lossless">
     </head>
     <body onload="handlers.init()">
+        <div class="popup" id="popup">
+            <div class="popupBox">
+                <div id="solution"></div><br>
+                <button class="share" onclick="handlers.resultsToClipboard()">
+                    <img class="shareIcon" src="assets/share.png">&nbsp; Share
+                </button>
+            </div>
+        </div>
+
         <div class="header">
             <div class="headerText">JERDLE WIP</div>
         </div>
+
         <hr>
+
         <br><center>design is not final</center>
+
         <div id="game">
             <div class="gameRow">
                 <div data-state="" class="gameSlot"></div>
@@ -60,6 +72,7 @@
                 <div data-state="" class="gameSlot"></div>
             </div>
         </div>
+
         <div id="keyboardContainer">
             <div class="keyboardrow1">
                 <button class="button" data-key="q">Q</button>

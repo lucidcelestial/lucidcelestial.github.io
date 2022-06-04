@@ -5,13 +5,13 @@ let cur_word="";
 let index=0;
 const colours = {
     foreground: "#FFFFFF",
-    defaultBorder: "#6E6E6E",
-    border: "#FFFFFF",
-    match: "#55DE3A",
-    correct: "#FFD500",
+    defaultBorder: "#C8C8C8",
+    border: "#000000",
+    match: "#22CC00",
+    correct: "#FFDD00",
     incorrectSlot: "#666666",
-    incorrectKeyBackground: "#333333",
-    incorrectKeyForeground: "#555555"
+    incorrectKeyBackground: "#DDDDDD",
+    incorrectKeyForeground: "#CCCCCC"
 }
 
 let handlers = {
@@ -79,7 +79,13 @@ let handlers = {
     win: () => {
         console.log("You win lol");
         handlers.removeEventListeners();
-        handlers.resultsToClipboard();
+        handlers.popup();
+    },
+    popup: () => {
+        let popupWindow = document.getElementById('popup');
+        let textbox = document.getElementById('solution');
+        solution.innerHTML = `Solution: ${cur_word.join('')}`
+        popupWindow.style.animation="showPopup 0.5s linear 1s 1 forwards";
     },
     resultsToClipboard: () => {
         let resultString=`Jerdle Test\nWord: ${cur_word.join('')}\n`;
@@ -188,7 +194,7 @@ let boardActions = {
                     break;
             }
             cur_slot.style.color=colours.foreground;
-            cur_slot.style.boxShadow="0px 3px 10px rgba(0, 0, 0, 0.5)";
+            cur_slot.style.boxShadow="0px 1px 5px rgba(0, 0, 0, 0.25)";
         }
     },
     updateButtonColours: (key,state) => {
