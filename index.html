@@ -13,10 +13,13 @@
     <body onload="handlers.init()">
         <div class="popup" id="popup">
             <div class="popupBox">
+                <span class="close" id="close">&times;</span>
+                <div class="popupBoxBody">
                 <div id="solution"></div><br>
-                <button class="share" onclick="handlers.resultsToClipboard()">
-                    <img class="shareIcon" src="assets/share.png">&nbsp; Share
-                </button>
+                    <button class="share" onclick="handlers.resultsToClipboard()">
+                        <img class="shareIcon" src="assets/share.png">&nbsp; Share
+                    </button>
+                </div>
             </div>
         </div>
 

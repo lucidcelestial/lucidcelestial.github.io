@@ -61,6 +61,10 @@ let handlers = {
                 
                 if(dataActions.isWord(word)){ 
                     dataActions.parseRow(values[index],index,cur_word); 
+                    if(index===5){
+                        handlers.end();
+                        break;
+                    } 
                     index++;
                 }else boardActions.clearRow(index);
                 break;
@@ -76,16 +80,20 @@ let handlers = {
                 break;
         }
     },
-    win: () => {
-        console.log("You win lol");
+    end: () => {
         handlers.removeEventListeners();
         handlers.popup();
     },
     popup: () => {
         let popupWindow = document.getElementById('popup');
         let textbox = document.getElementById('solution');
-        solution.innerHTML = `Solution: ${cur_word.join('')}`
-        popupWindow.style.animation="showPopup 0.5s linear 1s 1 forwards";
+        let close= document.getElementById('close');
+        textbox.innerHTML = `Solution: ${cur_word.join('')}`
+        popupWindow.style.animation="showPopup 0.5s linear 0.5s 1 forwards";
+
+        close.onclick = () => {
+            popupWindow.style.animation = "hidePopup 0.25s linear 0s 1 backwards";
+        }
     },
     resultsToClipboard: () => {
         let resultString=`Jerdle Test\nWord: ${cur_word.join('')}\n`;
@@ -112,7 +120,7 @@ let dataActions = {
 
         if (row.join().toLowerCase() === cur_word.join()) {
             for(let i=0;i<5;i++) gameBoard[index * 5 + i].dataset.state="match";
-            handlers.win();
+            handlers.end();
         }
 
         for (let i = 0; i < 5; i++) {
