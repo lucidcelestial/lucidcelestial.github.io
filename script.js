@@ -120,9 +120,10 @@ let dataActions = {
             cur_tile = gameBoard[(index * 5) + i];
             let check = false;
             for (let j = 0; j < 5; j++) {
-                if (row[i] === cur_word[j] && !checked[j]) {
+                if (row[i] === cur_word[j] && !checked[j] && !cur_tile.dataset.state) {
                     check = true;
                     checked[j] = true;
+                    break;
                 }
             }
             if (check) cur_tile.dataset.state = "correct";
