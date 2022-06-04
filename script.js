@@ -92,7 +92,7 @@ let handlers = {
         popupWindow.style.animation="showPopup 0.5s linear 0.5s 1 forwards";
 
         close.onclick = () => {
-            popupWindow.style.animation = "hidePopup 0.25s linear 0s 1 backwards";
+            popupWindow.style.animation = "hidePopup 0.25s linear 0s 1 forwards";
         }
     },
     resultsToClipboard: () => {
