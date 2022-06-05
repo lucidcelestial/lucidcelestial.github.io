@@ -4,14 +4,14 @@ const buttons = document.getElementsByClassName("button");
 let cur_word="";
 let index=0;
 const colours = {
-    foreground: "#FFFFFF",
-    defaultBorder: "#C8C8C8",
-    border: "#000000",
-    match: "#22CC00",
-    correct: "#FFDD00",
-    incorrectSlot: "#666666",
-    incorrectKeyBackground: "#DDDDDD",
-    incorrectKeyForeground: "#CCCCCC"
+    foreground: "rgb(256, 256, 256)",
+    defaultBorder: "rgb(200, 200, 200)",
+    border: "rgb(0, 0, 0)",
+    match: "rgb(34, 204, 0)",
+    correct: "rgb(255, 221, 0)",
+    incorrectSlot: "rgb(102, 102, 102)",
+    incorrectKeyBackground: "rgb(221, 221, 221)",
+    incorrectKeyForeground: "rgb(204, 204, 204)"
 }
 
 let handlers = {
@@ -92,7 +92,7 @@ let handlers = {
         popupWindow.style.animation="showPopup 0.5s linear 0.5s 1 forwards";
 
         close.onclick = () => {
-            popupWindow.style.animation = "hidePopup 0.25s linear 0s 1 backwards";
+            popupWindow.style.animation = "hidePopup 0.25s linear 0s 1 forwards";
         }
     },
     resultsToClipboard: () => {
@@ -207,20 +207,18 @@ let boardActions = {
     },
     updateButtonColours: (key,state) => {
         let button=Array.from(buttons).find(search => search.dataset.key === key);
-        switch(state){
-            case "match": 
-                button.style.background = colours.match; 
-                button.style.color = colours.foreground;
-                break;
-            case "correct": 
-                button.style.background = colours.correct;
-                button.style.color = colours.foreground; 
-                break;
-            case "incorrect": 
-                button.style.background = colours.incorrectKeyBackground;
-                button.style.color = colours.incorrectKeyForeground;
-                button.style.boxShadow = "none";
-                break;
+
+        if(state === "match"){
+            button.style.background = colours.match; 
+            button.style.color = colours.foreground;
+        }else if(state === "correct" && button.style.background !== colours.match){
+            console.log(button.style.background !== colours.match);
+            button.style.background = colours.correct;
+            button.style.color = colours.foreground; 
+        }else if(state === "incorrect" && button.style.background !== colours.match && button.style.background !== colours.correct){
+            button.style.background = colours.incorrectKeyBackground;
+            button.style.color = colours.incorrectKeyForeground;
+            button.style.boxShadow = "none";
         }
     },
     triggerAnimation: (animName, object, length) => {
