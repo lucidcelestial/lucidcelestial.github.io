@@ -2,31 +2,31 @@
 * { 
     cursor: url('assets/cursor.png') 32 32,auto; 
     font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: rgb(0, 0, 0);
-}
-body{
     animation-timing-function: linear;
-    height: 100%; background-repeat: no-repeat; background-attachment: fixed;
-
-    background: #FFFFFF;
-    overflow: hidden; 
 
     /*https://stackoverflow.com/questions/826782/how-to-disable-text-selection-highlighting*/
     -webkit-user-select: none; -ms-user-select: none; user-select: none;  
 }
-.header{
+body{
+    display: grid;
+    margin: 0;
+    background: #FFFFFF;
+    overflow: hidden; 
+}
+
+header{
     display: flex;
+    flex-direction: row;
     justify-content: center; align-items: center;
     height: auto; width: 100%;
+    padding: 5px;
+    border: 1px solid black; /*debugging*/
 }
-    hr{
-        border-bottom: 1px solid rgb(200, 200, 200);
-        margin: 5px -15px;
-    }
     .headerText{
         font-weight: bolder; font-size: 30px;
-        margin-top: 5px; margin-bottom: 5px;
     }
 
+/*#region*/
 .popup{
     display: flex; position: fixed;
     width: 100%; height: 100%;
@@ -138,6 +138,7 @@ body{
         #specialDel{
             width: 75px;
         }
+/*#endregion*/
 
 /*animation keyframes*/
 @keyframes press{
