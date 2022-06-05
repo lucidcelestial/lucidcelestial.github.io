@@ -155,12 +155,12 @@ header{
 
 /*on-screen keyboard stuff*/
 .keyboardContainer{
-    width: var(--game-max-width);
+    width: inherit;
     height: var(--keyboard-height);
 }
     .keyboardrow{
         display: flex;
-        margin: 0 0 var(--keyboard-key-gaps);
+        margin: 0 var(--keyboard-key-gaps);
     }
         .button{
             display: flex;
