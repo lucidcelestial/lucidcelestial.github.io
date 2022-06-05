@@ -1,161 +1,255 @@
+/*variables*/
+:root{
+    --default-background: rgb(255, 255, 255);
+    --default-foreground: rgb(0, 0, 0);
+    --default-border: rgb(200, 200, 200);
+    --default-key: linear-gradient(337.08deg, #f7f7f7 -3.33%, #e7e7e7 103.83%);
+    --key-action: linear-gradient(337.08deg, #f7f7f7 -3.33%, #f0f0f0 103.83%);
+    --popup-blur-background: rgba(0, 0, 0, 0.25);
+    --incorrect: rgb(204, 0, 0);
+    --share: rgb(34, 204, 0);
+    --share-action: rgb(32, 192, 0);
+    --default-shadow: 0px 1px 1px rgba(0, 0, 0, 0.25);
+    --shadow-hover: 0px 1px 3px rgba(0, 0, 0, 0.5);
+    --shadow-active: inset 0px 1px 3px rgba(0, 0, 0, 0.5);
+    --popup-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+    height: 100%;
+    --header-height: 50px;
+    --game-max-width: 600px;
+    --board-width: 365px; 
+    --board-height: 439px;
+    --keyboard-key-height: 70px;
+    --keyboard-key-gaps: 5px;
+    --keyboard-height: 240px;
+    --grid-gaps: 5px;
+    --popup-width: 500px;
+}
+
+/*animation keyframes*/
+@keyframes press{
+    100% { 
+        background: var(--key-action);
+        box-shadow: var(--shadow-active);
+    }
+}
+
+@keyframes incorrect{
+    0%,100%{ 
+        color: var(--default-foreground);
+        background: var(--incorrect);
+        border-color: var(--incorrect);
+    }
+    12.5%,62.5%{ 
+        color: #FFFFFF; 
+        transform: translateX(-3px); 
+        background: var(--incorrect);
+        border-color: var(--incorrect); 
+    }
+    37.5%,87.5%{ 
+        color: #FFFFFF; 
+        transform: translateX(3px); 
+        background: var(--incorrect); 
+        border-color: var(--incorrect);
+    }
+}
+
+@keyframes showPopup{
+    0%{ 
+        opacity: 0; 
+    }
+    1%{ 
+        z-index: 1; 
+    }
+    100%{ 
+        z-index: 1; 
+        opacity: 1; 
+    }
+}
+
+@keyframes hidePopup{
+    0%{ 
+        z-index: 1; 
+        opacity: 1; 
+    }
+    99.99%{ 
+        z-index: 1; 
+        opacity: 0; 
+    }
+    100%{ 
+        z-index: -1; 
+    }
+}
+
 /*general stuff*/
 * { 
     cursor: url('assets/cursor.png') 32 32,auto; 
-    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: rgb(0, 0, 0);
-    animation-timing-function: linear;
-
-    /*https://stackoverflow.com/questions/826782/how-to-disable-text-selection-highlighting*/
-    -webkit-user-select: none; -ms-user-select: none; user-select: none;  
-}
-body{
-    display: grid;
-    margin: 0;
-    background: #FFFFFF;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+    font-size: 25px;
+    font-weight: bold;
+    color: var(--default-foreground);
+    margin: 0; 
+    padding: 0;
+    user-select: none;  
     overflow: hidden; 
+    animation-timing-function: linear;
+}
+
+body{
+    height: 100%;
+    background: var(--default-background);
 }
 
 header{
     display: flex;
     flex-direction: row;
-    justify-content: center; align-items: center;
-    height: auto; width: 100%;
-    padding: 5px;
-    border: 1px solid black; /*debugging*/
+    align-items: center;
+    justify-content: center; 
+    height: var(--header-height);
+    border-bottom: 1px solid var(--default-border);
 }
     .headerText{
-        font-weight: bolder; font-size: 30px;
+        font-weight: bolder; 
+        font-size: 30px;
     }
 
-/*#region*/
+.main{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: var(--game-max-width);
+    height: calc(100% - var(--header-height));
+    margin: 0 auto;
+}
+
+/*game board stuff*/
+.gameContainer{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-grow: 1;
+}
+    .gameBoard{
+        display: grid;
+        grid-template-rows: repeat(6, 1fr);
+        width: var(--board-width);
+        height: var(--board-height);
+        padding: 5px;
+        gap: var(--grid-gaps);
+        box-sizing: border-box;
+    }
+        .gameRow{
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: var(--grid-gaps);
+        }
+            .gameSlot{
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                margin: calc(var(--grid-gaps) / 2);
+                text-transform: uppercase;
+                border: 2px solid var(--default-border);
+                border-radius: 5px;
+            }
+
+
+/*on-screen keyboard stuff*/
+.keyboardContainer{
+    width: var(--game-max-width);
+    height: var(--keyboard-height);
+}
+    .keyboardrow{
+        display: flex;
+        margin: 0 0 var(--keyboard-key-gaps);
+    }
+        .button{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex: 1;
+            height: var(--keyboard-key-height);
+            margin: calc(var(--keyboard-key-gaps) / 2);
+            background: var(--default-key);
+            border: none;
+            border-radius: 10px;
+            box-shadow: var(--default-shadow);
+            font-size: 16px;
+        }
+            .button:hover{
+                background: var(--key-action);
+                box-shadow: var(--shadow-hover);
+            }
+            .button:active{
+                background: var(--key-action);
+                box-shadow: var(--shadow-active);
+            }
+        #special{
+            flex: 1.5;
+            font-size: 12px;
+        }
+        .deleteIcon{
+            width: 25px; 
+            height: 25px;
+        }
+        .spacer{
+            flex: 0.5;
+        }
+
+/*share popup stuff*/
 .popup{
-    display: flex; position: fixed;
-    width: 100%; height: 100%;
+    display: flex; 
+    position: fixed;
+    top: 0; 
+    left: 0;
+    width: 100%; 
+    height: 100%;
+    background-color: var(--popup-blur-background);
+    backdrop-filter: blur(5px);
     z-index: -1;
-    top: 0; left: 0;
-    background-color: rgba(0, 0, 0, 0.25);
     opacity: 0; 
 }   
     .popupBox{
-        width: 500px; margin: auto auto; padding: 10px;
+        width: var(--popup-width);
+        margin: auto auto; 
+        padding: 10px;
         border-radius: 5px; 
-        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
-        background-color: #FFFFFF;
+        background-color: var(--default-background);
+        box-shadow: var(--popup-shadow);
         font-size: 20px;
     }
     .popupBoxBody{
+        display: flex; 
+        flex-direction: column; 
+        align-items: center;
         padding: 40px; 
-        display: flex; flex-direction: column; align-items: center;
     }
     .shareIcon{
-        width: 20px; height: 20px;
+        width: 20px; 
+        height: 20px;
     }
     .share{
-        display: flex; justify-content: center; align-items: center;
-        background-color: #22CC00; color: #FFFFFF;
-        width:150px; height: 50px;
+        display: flex; 
+        align-items: center;
+        justify-content: center;
+        width:150px; 
+        height: 50px;
+        background-color: var(--share);
+        color: var(--default-background);
         font-size: 20px;
         border: none; border-radius: 10px;
     }
         .share:hover{
-            background-color: #20c000;
-            box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.5);
+            background-color: var(--share-action);
+            box-shadow: var(--shadow-hover);
         }
         .share:active{
-            background-color: #20c000;
-            box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.5);
+            background-color: var(--share-action);
+            box-shadow: var(--shadow-active);
         }
     .close{
-        display: flex; justify-content: right;
+        display: flex; 
+        justify-content: right;
     }
-
-/*game board stuff*/
-#game{
-    position: fixed;
-    left: 50%; top: 25%; transform: translate(-50%, -25%);
-    
-    width: 370px; height: 450px;
-
-    display: grid;
-    grid-template-rows: repeat(6,1fr); row-gap: 5px; padding:25px;
-
-    font-weight: bold; font-size: 25px; text-transform: uppercase;
-}
-    .gameRow{
-        display: grid; 
-        grid-template-columns: repeat(5,1fr); column-gap: 10px;
-    }
-        .gameSlot{
-            display: inline-flex;
-            width: 60px; height: 60px;
-            align-items: center; justify-content: center;
-            border: 2px solid; border-color: rgb(200, 200, 200); border-radius: 5px;
+        #close:hover{
+            color: var(--default-border);
         }
-
-
-/*on-screen keyboard stuff*/
-#keyboardContainer{
-    position: fixed;
-    left: 50%; bottom: 10px; transform: translate(-50%, 0%);
-    
-    display: grid;
-    grid-template-rows: repeat(3,70px); row-gap: 5px;
-}
-    .keyboardrow1{
-        display: grid;
-        grid-template-columns: repeat(10,50px); column-gap: 5px;
-    }
-    .keyboardrow2{
-        display: grid;
-        column-gap: 5px; grid-template-columns: repeat(9,50px); margin-left: 25px;
-    }
-    .keyboardrow3{
-        display: grid;
-        column-gap: 5px; grid-template-columns: 75px repeat(7,50px) 75px;
-    }
-        .button{
-            width: 50px; height: 70px; padding: 5px;
-
-            background: linear-gradient(337.08deg, #f7f7f7 -3.33%, #e7e7e7 103.83%);
-            box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.25);
-            border-radius: 10px; border: none;
-            
-            font-size: 16px; font-weight: bold;
-
-            transition-duration: 0.1s;
-        }
-            .button:hover{
-                background: linear-gradient(337.08deg, #f7f7f7 -3.33%, #f0f0f0 103.83%);
-                box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.5);
-            }
-            .button:active{
-                background: linear-gradient(337.08deg, #f7f7f7 -3.33%, #f0f0f0 103.83%);
-                box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.5);
-            }
-        #specialEnter{
-            width: 75px;
-            font-size: 12px;
-        }
-        #specialDel{
-            width: 75px;
-        }
-/*#endregion*/
-
-/*animation keyframes*/
-@keyframes press{
-    100% { background: linear-gradient(337.08deg, #f7f7f7 -3.33%, #f0f0f0 103.83%); box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.5); }
-}
-@keyframes incorrect{
-    0%,100%{ color: #FFFFFF; background: #cc0000; border-color: #cc0000; }
-    12.5%,62.5%{ color: #FFFFFF; transform: translateX(-3px); background: #cc0000; border-color: #cc0000; }
-    37.5%,87.5%{ color: #FFFFFF; transform: translateX(3px); background: #cc0000; border-color: #cc0000; }
-}
-@keyframes showPopup{
-    0%{ opacity: 0; }
-    1%{ z-index: 1; }
-    100%{ z-index: 1; opacity: 1; }
-}
-@keyframes hidePopup{
-    0%{ z-index: 1; opacity: 1; }
-    99.99%{ z-index: 1; opacity: 0; }
-    100%{ z-index: -1; }
-}

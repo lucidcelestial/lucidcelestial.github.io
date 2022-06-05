@@ -212,7 +212,6 @@ let boardActions = {
             button.style.background = colours.match; 
             button.style.color = colours.foreground;
         }else if(state === "correct" && button.style.background !== colours.match){
-            console.log(button.style.background !== colours.match);
             button.style.background = colours.correct;
             button.style.color = colours.foreground; 
         }else if(state === "incorrect" && button.style.background !== colours.match && button.style.background !== colours.correct){

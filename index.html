@@ -13,7 +13,9 @@
     <body onload="handlers.init()">
         <div class="popup" id="popup">
             <div class="popupBox">
-                <span class="close" id="close">&times;</span>
+                <div class="close">
+                    <span id="close">&times;</span>
+                </div>
                 <div class="popupBoxBody">
                 <div id="solution"></div><br>
                     <button class="share" onclick="handlers.resultsToClipboard()">
@@ -26,87 +28,92 @@
         <header>
             <div class="headerText">JERDLE WIP</div>
         </header>
+        <div class="main">
+            <div class="gameContainer">
+                <div class="gameBoard">
+                    <div class="gameRow">
+                        <div data-state="" class="gameSlot"></div>
+                        <div data-state="" class="gameSlot"></div>
+                        <div data-state="" class="gameSlot"></div>
+                        <div data-state="" class="gameSlot"></div>
+                        <div data-state="" class="gameSlot"></div>
+                    </div>
+                    <div class="gameRow">
+                        <div data-state="" class="gameSlot"></div>
+                        <div data-state="" class="gameSlot"></div>
+                        <div data-state="" class="gameSlot"></div>
+                        <div data-state="" class="gameSlot"></div>
+                        <div data-state="" class="gameSlot"></div>
+                    </div>
+                    <div class="gameRow">
+                        <div data-state="" class="gameSlot"></div>
+                        <div data-state="" class="gameSlot"></div>
+                        <div data-state="" class="gameSlot"></div>
+                        <div data-state="" class="gameSlot"></div>
+                        <div data-state="" class="gameSlot"></div>
+                    </div>
+                    <div class="gameRow">
+                        <div data-state="" class="gameSlot"></div>
+                        <div data-state="" class="gameSlot"></div>
+                        <div data-state="" class="gameSlot"></div>
+                        <div data-state="" class="gameSlot"></div>
+                        <div data-state="" class="gameSlot"></div>
+                    </div>
+                    <div class="gameRow">
+                        <div data-state="" class="gameSlot"></div>
+                        <div data-state="" class="gameSlot"></div>
+                        <div data-state="" class="gameSlot"></div>
+                        <div data-state="" class="gameSlot"></div>
+                        <div data-state="" class="gameSlot"></div>
+                    </div>
+                    <div class="gameRow">
+                        <div data-state="" class="gameSlot"></div>
+                        <div data-state="" class="gameSlot"></div>
+                        <div data-state="" class="gameSlot"></div>
+                        <div data-state="" class="gameSlot"></div>
+                        <div data-state="" class="gameSlot"></div>
+                    </div>
+                </div>
+            </div>
 
-        <!--<div id="game">
-            <div class="gameRow">
-                <div data-state="" class="gameSlot"></div>
-                <div data-state="" class="gameSlot"></div>
-                <div data-state="" class="gameSlot"></div>
-                <div data-state="" class="gameSlot"></div>
-                <div data-state="" class="gameSlot"></div>
-            </div>
-            <div class="gameRow">
-                <div data-state="" class="gameSlot"></div>
-                <div data-state="" class="gameSlot"></div>
-                <div data-state="" class="gameSlot"></div>
-                <div data-state="" class="gameSlot"></div>
-                <div data-state="" class="gameSlot"></div>
-            </div>
-            <div class="gameRow">
-                <div data-state="" class="gameSlot"></div>
-                <div data-state="" class="gameSlot"></div>
-                <div data-state="" class="gameSlot"></div>
-                <div data-state="" class="gameSlot"></div>
-                <div data-state="" class="gameSlot"></div>
-            </div>
-            <div class="gameRow">
-                <div data-state="" class="gameSlot"></div>
-                <div data-state="" class="gameSlot"></div>
-                <div data-state="" class="gameSlot"></div>
-                <div data-state="" class="gameSlot"></div>
-                <div data-state="" class="gameSlot"></div>
-            </div>
-            <div class="gameRow">
-                <div data-state="" class="gameSlot"></div>
-                <div data-state="" class="gameSlot"></div>
-                <div data-state="" class="gameSlot"></div>
-                <div data-state="" class="gameSlot"></div>
-                <div data-state="" class="gameSlot"></div>
-            </div>
-            <div class="gameRow">
-                <div data-state="" class="gameSlot"></div>
-                <div data-state="" class="gameSlot"></div>
-                <div data-state="" class="gameSlot"></div>
-                <div data-state="" class="gameSlot"></div>
-                <div data-state="" class="gameSlot"></div>
+            <div class="keyboardContainer">
+                <div class="keyboardrow">
+                    <button class="button" data-key="q">Q</button>
+                    <button class="button" data-key="w">W</button>
+                    <button class="button" data-key="e">E</button>
+                    <button class="button" data-key="r">R</button>
+                    <button class="button" data-key="t">T</button>
+                    <button class="button" data-key="y">Y</button>
+                    <button class="button" data-key="u">U</button>
+                    <button class="button" data-key="i">I</button>
+                    <button class="button" data-key="o">O</button>
+                    <button class="button" data-key="p">P</button>
+                </div>
+                <div class="keyboardrow">
+                    <div class="spacer"></div>
+                    <button class="button" data-key="a">A</button>
+                    <button class="button" data-key="s">S</button>
+                    <button class="button" data-key="d">D</button>
+                    <button class="button" data-key="f">F</button>
+                    <button class="button" data-key="g">G</button>
+                    <button class="button" data-key="h">H</button>
+                    <button class="button" data-key="j">J</button>
+                    <button class="button" data-key="k">K</button>
+                    <button class="button" data-key="l">L</button>
+                    <div class="spacer"></div>
+                </div>
+                <div class="keyboardrow">
+                    <button class="button" id="special" data-key="enter">ENTER</button>
+                    <button class="button" data-key="z">Z</button>
+                    <button class="button" data-key="x">X</button>
+                    <button class="button" data-key="c">C</button>
+                    <button class="button" data-key="v">V</button>
+                    <button class="button" data-key="b">B</button>
+                    <button class="button" data-key="n">N</button>
+                    <button class="button" data-key="m">M</button>
+                    <button class="button" id="special" data-key="backspace"><img class="deleteIcon" src="assets/delete.png"></button>
+                </div>
             </div>
         </div>
-
-        <div id="keyboardContainer">
-            <div class="keyboardrow1">
-                <button class="button" data-key="q">Q</button>
-                <button class="button" data-key="w">W</button>
-                <button class="button" data-key="e">E</button>
-                <button class="button" data-key="r">R</button>
-                <button class="button" data-key="t">T</button>
-                <button class="button" data-key="y">Y</button>
-                <button class="button" data-key="u">U</button>
-                <button class="button" data-key="i">I</button>
-                <button class="button" data-key="o">O</button>
-                <button class="button" data-key="p">P</button>
-            </div>
-            <div class="keyboardrow2">
-                <button class="button" data-key="a">A</button>
-                <button class="button" data-key="s">S</button>
-                <button class="button" data-key="d">D</button>
-                <button class="button" data-key="f">F</button>
-                <button class="button" data-key="g">G</button>
-                <button class="button" data-key="h">H</button>
-                <button class="button" data-key="j">J</button>
-                <button class="button" data-key="k">K</button>
-                <button class="button" data-key="l">L</button>
-            </div>
-            <div class="keyboardrow3">
-                <button class="button" id="specialEnter" data-key="enter">ENTER</button>
-                <button class="button" data-key="z">Z</button>
-                <button class="button" data-key="x">X</button>
-                <button class="button" data-key="c">C</button>
-                <button class="button" data-key="v">V</button>
-                <button class="button" data-key="b">B</button>
-                <button class="button" data-key="n">N</button>
-                <button class="button" data-key="m">M</button>
-                <button class="button" id="specialDel" data-key="backspace">⌫</button>
-            </div>
-        </div>-->
     </body>
 </html>
