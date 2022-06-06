@@ -98,7 +98,7 @@ let handlers = {
         }
     },
     resultsToClipboard: () => {
-        let resultString=`Jerdle Test\nWord: ${cur_word.join('')}\n`;
+        let resultString=`Jerdle\nWord: ${cur_word.join('')}\n`;
         let indexCounter=0;
         loop:for(slot of gameBoard){
             if(indexCounter%5===0) resultString+="\n";
@@ -111,6 +111,7 @@ let handlers = {
             }
             indexCounter++;
         }
+        /*https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/Interact_with_the_clipboard*/
         navigator.clipboard.writeText(resultString);
     }
 }

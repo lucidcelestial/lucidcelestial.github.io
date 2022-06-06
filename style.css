@@ -282,5 +282,5 @@ header{
         justify-content: right;
     }
         #close:hover{
-            color: var(--default-border);
+            opacity: 0.5;
         }
