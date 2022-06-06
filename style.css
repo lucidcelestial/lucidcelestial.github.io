@@ -25,6 +25,13 @@
     --popup-width: 500px;
 }
 
+@media only screen and (max-width: 600px) {
+    :root{
+        --board-width: 295px;
+        --board-height: 355px;
+    }
+}
+
 /*animation keyframes*/
 @keyframes press{
     100% { 
