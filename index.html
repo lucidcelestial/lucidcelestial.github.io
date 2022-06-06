@@ -15,11 +15,11 @@
         <div class="popup" id="popup">
             <div class="popupBox">
                 <div class="close">
-                    <span id="close">&times;</span>
+                    <span title="Close Popup" id="close">&times;</span>
                 </div>
                 <div class="popupBoxBody">
                 <div id="solution"></div><br>
-                    <button class="share" onclick="handlers.resultsToClipboard()">
+                    <button title="Share" class="share" onclick="handlers.resultsToClipboard()">
                         <img class="shareIcon" src="assets/share.png">&nbsp; Share
                     </button>
                 </div>
@@ -27,7 +27,9 @@
         </div>
 
         <header>
+            <img class="headIcon" title="Reload Page" id="reload" onclick="window.location.reload()" src="assets/new.png">
             <div class="headerText">JERDLE WIP</div>
+            <img class="headIcon" title="Show Results" id="results" src="assets/results.png">
         </header>
         <div class="main">
             <div class="gameContainer">

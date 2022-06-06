@@ -81,15 +81,17 @@ let handlers = {
         }
     },
     end: () => {
+        let resultButton = document.getElementById('results');
+        resultButton.addEventListener("click",handlers.popup,false);
         handlers.removeEventListeners();
-        handlers.popup();
+        setTimeout(() => handlers.popup(), 500);
     },
     popup: () => {
         let popupWindow = document.getElementById('popup');
         let textbox = document.getElementById('solution');
         let close= document.getElementById('close');
         textbox.innerHTML = `Solution: ${cur_word.join('')}`
-        popupWindow.style.animation="showPopup 0.5s linear 0.5s 1 forwards";
+        popupWindow.style.animation="showPopup 0.5s linear 0s 1 forwards";
 
         close.onclick = () => {
             popupWindow.style.animation = "hidePopup 0.25s linear 0s 1 forwards";

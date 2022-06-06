@@ -10,6 +10,7 @@
     --share: rgb(34, 204, 0);
     --share-action: rgb(32, 192, 0);
     --default-shadow: 0px 1px 1px rgba(0, 0, 0, 0.25);
+    --header-shadow: 0px 2px 5px rgba(0, 0, 0, 0.25);
     --shadow-hover: 0px 1px 3px rgba(0, 0, 0, 0.5);
     --shadow-active: inset 0px 1px 3px rgba(0, 0, 0, 0.5);
     --popup-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
@@ -25,10 +26,20 @@
     --popup-width: 500px;
 }
 
+@media only screen and (max-height: 800px) {
+    :root{
+        --board-width: 279px;
+        --board-height: 355px;
+        --keyboard-height: 210px;
+        --keyboard-key-height: 60px;
+        --keyboard-key-gaps: 3px;
+        --grid-gaps: 3px;
+    }
+}
+
 @media only screen and (max-width: 600px) {
     :root{
-        --board-width: 295px;
-        --board-height: 355px;
+        --popup-width: 75%;
     }
 }
 
@@ -110,16 +121,28 @@ header{
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: center; 
     height: var(--header-height);
     border-bottom: 1px solid var(--default-border);
+    background-color: var(--default-background);
+    box-shadow: var(--header-shadow);
 }
     .headerText{
+        display: flex;
+        align-items: center;
+        justify-content: center; 
         font-weight: bolder; 
         font-size: 30px;
+        flex-grow: 1;
     }
-
-.main{
+    .headIcon{
+        width: 25px;
+        height: 25px;
+        margin: 10px;
+    }
+        .headIcon:hover{
+            opacity: 0.5;
+        }
+    .main{
     display: flex;
     flex-direction: column;
     width: 100%;
@@ -217,18 +240,19 @@ header{
 }   
     .popupBox{
         width: var(--popup-width);
+        height: auto;
         margin: auto auto; 
         padding: 10px;
         border-radius: 5px; 
         background-color: var(--default-background);
         box-shadow: var(--popup-shadow);
-        font-size: 20px;
+        font-size: 16px;
     }
     .popupBoxBody{
         display: flex; 
         flex-direction: column; 
-        align-items: center;
-        padding: 40px; 
+        align-items: center; 
+        margin-bottom: 20px;
     }
     .shareIcon{
         width: 20px; 
