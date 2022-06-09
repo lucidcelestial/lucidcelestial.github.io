@@ -26,6 +26,7 @@
     --popup-width: 500px;
 }
 
+/*phone variable adjustments*/
 @media only screen and (max-height: 800px) {
     :root{
         --board-width: 279px;
@@ -171,6 +172,7 @@ header{
             display: grid;
             grid-template-columns: repeat(5, 1fr);
             gap: var(--grid-gaps);
+            overflow:visible
         }
             .gameSlot{
                 display: inline-flex;
@@ -191,6 +193,7 @@ header{
     .keyboardrow{
         display: flex;
         margin: 0 var(--keyboard-key-gaps);
+        overflow:visible;
     }
         .button{
             display: flex;
